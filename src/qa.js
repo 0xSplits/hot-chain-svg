@@ -8,7 +8,7 @@ const deploy = require('./deploy');
 const { DOMParser } = require('xmldom');
 
 const SOURCE = path.join(__dirname, '..', 'contracts', 'Renderer.sol');
-const DESTINATION = path.join(os.tmpdir(), 'hot-chain-svg-');
+const DESTINATION = path.join(os.tmpdir(), 'liquid-split-');
 
 async function main() {
   const { vm, pk } = await boot();
