@@ -61,8 +61,7 @@ contract Renderer {
                         svg.prop('y', '160'),
                         svg.prop('font-size', '12')
                     ),
-                    svg.cdata('TOKEN_ID')
-                    
+                    svg.cdata('TOKEN')
                 ),
                 svg.text(
                     string.concat(
@@ -70,7 +69,11 @@ contract Renderer {
                         svg.prop('y', '160'),
                         svg.prop('font-size', '16')
                     ),
-                    utils.uint2str(_tokenId)
+                    string.concat(
+                        utils.uint2str(_tokenId),
+                        svg.cdata(' / '),
+                        svg.cdata('1000')
+                    )
                 ),
                 svg.text(
                     string.concat(
