@@ -125,4 +125,16 @@ library utils {
         }
         return string(bstr);
     }
+
+    // returns the width in pixels of a string
+    function utfStringWidth(string memory _str, uint256 _fontSize)
+        internal
+        pure
+        returns (uint256 _stringWidth)
+    {
+        uint256 _stringLength = utfStringLength(_str);
+        uint256 _utfWidth = _fontSize / 2;
+        uint256 _width = _utfWidth * _stringLength;
+        return uint256(_width);
+    }
 }
