@@ -5,11 +5,11 @@ import './SVG.sol';
 import './Utils.sol';
 
 contract Renderer {
-    function render(string memory contractAddress, string memory contractName)
-        public
-        pure
-        returns (string memory)
-    {
+    function render(
+        string memory contractAddress,
+        string memory chainId,
+        string memory mintedOnDate
+    ) public pure returns (string memory) {
         return
             string.concat(
                 '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" style="background:#FAFAFA;font-family:monospace;font-color:#000000">',
@@ -45,33 +45,32 @@ contract Renderer {
                     string.concat(
                         svg.prop('x', '50'),
                         svg.prop('y', '130'),
-                        svg.prop('font-size', '16')
+                        svg.prop('font-size', '24')
                     ),
-                    svg.cdata('EACH TOKEN ENTITLES')
+                    svg.cdata('10 TOKENS = 1%')
                 ),
                 svg.text(
                     string.concat(
-                        svg.prop('x', '65'),
-                        svg.prop('y', '146'),
-                        svg.prop('font-size', '16')
+                        svg.prop('x', '34'),
+                        svg.prop('y', '160'),
+                        svg.prop('font-size', '12')
                     ),
-                    svg.cdata('OWNER TO 0.0001%')
+                    svg.cdata('Each token entitles the owner to')
                 ),
                 svg.text(
                     string.concat(
-                        svg.prop('x', '20'),
-                        svg.prop('y', '200'),
-                        svg.prop('font-size', '16'),
-                        svg.prop('text-transform', 'uppercase')
+                        svg.prop('x', '54'),
+                        svg.prop('y', '175'),
+                        svg.prop('font-size', '12')
                     ),
-                    svg.cdata(contractName)
+                    svg.cdata("0.01% of the Split's income")
                 ),
                 svg.text(
                     string.concat(
-                        svg.prop('x', '20'),
-                        svg.prop('y', '220'),
-                        svg.prop('fill', '#888888'),
-                        svg.prop('font-size', '10')
+                        svg.prop('x', '21'),
+                        svg.prop('y', '240'),
+                        svg.prop('font-size', '10'),
+                        svg.prop('fill', '#999999')
                     ),
                     svg.cdata(contractAddress)
                 ),
@@ -89,7 +88,7 @@ contract Renderer {
                         svg.prop('y', '280'),
                         svg.prop('font-size', '16')
                     ),
-                    svg.cdata('1')
+                    svg.cdata(chainId)
                 ),
                 svg.text(
                     string.concat(
@@ -105,7 +104,7 @@ contract Renderer {
                         svg.prop('y', '280'),
                         svg.prop('font-size', '16')
                     ),
-                    svg.cdata('2022-08-19')
+                    svg.cdata(mintedOnDate)
                 ),
                 '</svg>'
             );
@@ -115,7 +114,8 @@ contract Renderer {
         return
             render(
                 '0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE',
-                'HelloWorld contract name'
+                '1',
+                '2022-10-07'
             );
     }
 }
