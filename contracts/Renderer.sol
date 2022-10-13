@@ -13,98 +13,106 @@ contract Renderer {
         return
             string.concat(
                 '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" style="background:#FAFAFA;font-family:monospace;font-color:#000000">',
-                svg.rect(
-                    string.concat(
-                        svg.prop('x', '232'),
-                        svg.prop('y', '20'),
-                        svg.prop('width', utils.uint2str(48)),
-                        svg.prop('height', utils.uint2str(48)),
-                        svg.prop('fill', '#000000')
-                    ),
-                    utils.NULL
-                ),
                 svg.text(
                     string.concat(
-                        svg.prop('x', '20'),
-                        svg.prop('y', '40'),
-                        svg.prop('font-size', '22'),
-                        svg.prop('font-weight', '700')
-                    ),
-                    svg.cdata('LIQUID')
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '20'),
-                        svg.prop('y', '64'),
-                        svg.prop('font-size', '22'),
-                        svg.prop('font-weight', '700')
-                    ),
-                    svg.cdata('SPLIT')
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '50'),
-                        svg.prop('y', '130'),
-                        svg.prop('font-size', '24')
-                    ),
-                    svg.cdata('10 TOKENS = 1%')
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '34'),
-                        svg.prop('y', '160'),
-                        svg.prop('font-size', '12')
-                    ),
-                    svg.cdata('Each token entitles the owner to')
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '54'),
-                        svg.prop('y', '175'),
-                        svg.prop('font-size', '12')
-                    ),
-                    svg.cdata("0.01% of the Split's income")
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '21'),
-                        svg.prop('y', '240'),
-                        svg.prop('font-size', '10'),
-                        svg.prop('fill', '#999999')
+                        svg.prop('x', '10'),
+                        svg.prop('y', '25'),
+                        svg.prop('font-size', '11'),
+                        svg.prop('fill', '#387D47')
                     ),
                     svg.cdata(contractAddress)
                 ),
                 svg.text(
                     string.concat(
-                        svg.prop('x', '20'),
-                        svg.prop('y', '260'),
-                        svg.prop('font-size', '12')
+                        svg.prop('x', '10'),
+                        svg.prop('y', '280'),
+                        svg.prop('font-size', '11'),
+                        svg.prop('fill', '#387D47')
                     ),
-                    svg.cdata('CHAIN_ID')
+                    svg.cdata(contractAddress)
                 ),
                 svg.text(
                     string.concat(
-                        svg.prop('x', '20'),
-                        svg.prop('y', '280'),
-                        svg.prop('font-size', '16')
+                        svg.prop('x', '36'),
+                        svg.prop('y', '56'),
+                        svg.prop('font-size', '18')
+                    ),
+                    svg.cdata('0XSPLITS LIQUID SPLIT')
+                ),
+                svg.text(
+                    string.concat(
+                        svg.prop('x', '24'),
+                        svg.prop('y', '90'),
+                        svg.prop('font-size', '13')
+                    ),
+                    svg.cdata('Each token entitles the owner to')
+                ),
+                svg.text(
+                    string.concat(
+                        svg.prop('x', '48'),
+                        svg.prop('y', '108'),
+                        svg.prop('font-size', '13')
+                    ),
+                    svg.cdata("0.1% of the Split's income")
+                ),
+                svg.text(
+                    string.concat(
+                        svg.prop('x', '68'),
+                        svg.prop('y', '260'),
+                        svg.prop('font-size', '20')
+                    ),
+                    svg.cdata('10 TOKENS = 1%')
+                ),
+                svg.text(
+                    string.concat(
+                        svg.prop('x', '67'),
+                        svg.prop('y', '150'),
+                        svg.prop('font-size', '12')
+                    ),
+                    svg.cdata('CHAIN')
+                ),
+                svg.text(
+                    string.concat(
+                        svg.prop('x', '60'),
+                        svg.prop('y', '175'),
+                        svg.prop('font-size', '12')
+                    ),
+                    svg.cdata('MINTED')
+                ),
+                svg.text(
+                    string.concat(
+                        svg.prop('x', '60'),
+                        svg.prop('y', '200'),
+                        svg.prop('font-size', '12')
+                    ),
+                    svg.cdata('SERIES')
+                ),
+                svg.text(
+                    string.concat(
+                        svg.prop('x', '140'),
+                        svg.prop('y', '150'),
+                        svg.prop('font-size', '18'),
+                        svg.prop('fill', '#387D47')
                     ),
                     svg.cdata(chainId)
                 ),
                 svg.text(
                     string.concat(
-                        svg.prop('x', '210'),
-                        svg.prop('y', '260'),
-                        svg.prop('font-size', '12')
+                        svg.prop('x', '140'),
+                        svg.prop('y', '175'),
+                        svg.prop('font-size', '18'),
+                        svg.prop('fill', '#387D47')
                     ),
-                    svg.cdata('MINTED_ON')
+                    svg.cdata(mintedOnDate)
                 ),
                 svg.text(
                     string.concat(
-                        svg.prop('x', '180'),
-                        svg.prop('y', '280'),
-                        svg.prop('font-size', '16')
+                        svg.prop('x', '140'),
+                        svg.prop('y', '200'),
+                        svg.prop('font-size', '18'),
+                        svg.prop('fill', '#387D47')
                     ),
-                    svg.cdata(mintedOnDate)
+                    svg.cdata('01000001')
                 ),
                 '</svg>'
             );
