@@ -1,5 +1,6 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.12;
+import './SVG.sol';
 
 // Core utils used extensively to format CSS and numbers.
 library utils {
@@ -126,15 +127,57 @@ library utils {
         return string(bstr);
     }
 
-    // returns the width in pixels of a string
-    function utfStringWidth(string memory _str, uint256 _fontSize)
+    // returns a substring of a string
+    function substring(
+        string memory _str,
+        uint256 startIndex,
+        uint256 endIndex
+    ) internal pure returns (string memory) {
+        bytes memory strBytes = bytes(_str);
+        bytes memory result = new bytes(endIndex - startIndex);
+        for (uint256 i = startIndex; i < endIndex; i++) {
+            result[i - startIndex] = strBytes[i];
+        }
+        return string(result);
+    }
+
+    // returns hsla color from an address
+    function getHslColor(uint256 seed)
         internal
         pure
-        returns (uint256 _stringWidth)
+        returns (string memory _hsla)
     {
-        uint256 _stringLength = utfStringLength(_str);
-        uint256 _utfWidth = _fontSize / 2;
-        uint256 _width = _utfWidth * _stringLength;
-        return uint256(_width);
+        uint256 hue = seed % 360;
+        _hsla = string.concat('hsla(', utils.uint2str(hue), ', 92%, 52%, 1)');
+    }
+
+    // draw splits logo or draw cool splat
+    function drawOrb(
+        uint256 x,
+        uint256 y,
+        uint256 size,
+        string memory color
+    ) internal pure returns (string memory _values) {
+        uint256 startingX = 365;
+        uint256 startingY = 430;
+        _values = string.concat(
+            svg.circle(
+                string.concat(
+                    svg.prop('cx', uint2str(startingX - (x * 17))),
+                    svg.prop('cy', uint2str(startingY - (y * 29))),
+                    svg.prop('r', uint2str(4 + size * 2)),
+                    svg.prop('fill', color)
+                )
+            ),
+            svg.circle(
+                string.concat(
+                    svg.prop('cx', uint2str(startingX - 2 - (x * 17))),
+                    svg.prop('cy', uint2str(startingY - 2 - (y * 29))),
+                    svg.prop('r', uint2str(4 + size * 2)),
+                    svg.prop('fill', '#FFFFFF'),
+                    svg.prop('opacity', '0.05')
+                )
+            )
+        );
     }
 }

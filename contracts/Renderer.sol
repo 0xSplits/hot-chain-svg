@@ -6,109 +6,97 @@ import './Utils.sol';
 
 contract Renderer {
     function render(
+        address addr,
         string memory contractAddress,
         string memory chainId,
         string memory mintedOnDate
     ) public pure returns (string memory) {
+        // string memory contractAddress = utils.uint2str(uint256(uint160(addr)));
+        string memory color = utils.getHslColor(uint256(uint160(addr)));
+        string memory drawLogoRow5 = string.concat(
+            utils.drawOrb(6, 5, 3, color),
+            utils.drawOrb(4, 5, 2, color),
+            utils.drawOrb(2, 5, 1, color)
+        );
+        string memory drawLogoRow4 = string.concat(
+            utils.drawOrb(7, 4, 4, color),
+            utils.drawOrb(5, 4, 3, color),
+            utils.drawOrb(3, 4, 2, color),
+            utils.drawOrb(1, 4, 1, color)
+        );
+        string memory drawLogoRow3 = string.concat(
+            utils.drawOrb(8, 3, 5, color),
+            utils.drawOrb(6, 3, 4, color),
+            utils.drawOrb(4, 3, 3, color),
+            utils.drawOrb(2, 3, 2, color),
+            utils.drawOrb(0, 3, 1, color)
+        );
+        string memory drawLogoRow2 = string.concat(
+            utils.drawOrb(7, 2, 4, color),
+            utils.drawOrb(5, 2, 3, color),
+            utils.drawOrb(3, 2, 2, color),
+            utils.drawOrb(1, 2, 1, color)
+        );
+        string memory drawLogoRow1 = string.concat(
+            utils.drawOrb(6, 1, 3, color),
+            utils.drawOrb(4, 1, 2, color),
+            utils.drawOrb(2, 1, 1, color)
+        );
+        string memory logo = string.concat(
+            drawLogoRow5,
+            drawLogoRow4,
+            drawLogoRow3,
+            drawLogoRow2,
+            drawLogoRow1
+        );
+        string memory header = string.concat(
+            svg.text(
+                string.concat(svg.prop('x', '48'), svg.prop('y', '80')),
+                svg.cdata('Liquid Split')
+            ),
+            svg.text(
+                string.concat(svg.prop('x', '48'), svg.prop('y', '130')),
+                string.concat(svg.cdata('Chain '), svg.cdata(chainId))
+            ),
+            svg.text(
+                string.concat(svg.prop('x', '48'), svg.prop('y', '180')),
+                string.concat(svg.cdata('Minted '), svg.cdata(mintedOnDate))
+            )
+        );
+        string memory footer = string.concat(
+            svg.text(
+                string.concat(
+                    svg.prop('x', '48'),
+                    svg.prop('y', '520'),
+                    svg.prop('font-size', '21'),
+                    svg.prop('fill', color)
+                ),
+                svg.cdata(contractAddress)
+            ),
+            svg.text(
+                string.concat(
+                    svg.prop('x', '48'),
+                    svg.prop('y', '550'),
+                    svg.prop('fill', '#666666'),
+                    svg.prop('font-size', '21')
+                ),
+                svg.cdata('Each token entitles the owner to 0.1% of the Split')
+            )
+        );
         return
             string.concat(
-                '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" style="background:#F6F5EA;font-family:monospace;fill:#343434">',
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '9'),
-                        svg.prop('y', '18'),
-                        svg.prop('font-size', '12'),
-                        svg.prop('fill', '#387D47'),
-                        svg.prop('letter-spacing', '-0.5')
-                    ),
-                    svg.cdata(contractAddress)
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '9'),
-                        svg.prop('y', '290'),
-                        svg.prop('font-size', '12'),
-                        svg.prop('fill', '#387D47'),
-                        svg.prop('letter-spacing', '-0.5')
-                    ),
-                    svg.cdata(contractAddress)
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '34'),
-                        svg.prop('y', '66'),
-                        svg.prop('font-weight', '700'),
-                        svg.prop('font-size', '18')
-                    ),
-                    svg.cdata('0XSPLITS LIQUID SPLIT')
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '36'),
-                        svg.prop('y', '96'),
-                        svg.prop('fill', '#777777'),
-                        svg.prop('font-size', '13')
-                    ),
-                    svg.cdata('Each token entitles the owner')
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '36'),
-                        svg.prop('y', '112'),
-                        svg.prop('fill', '#777777'),
-                        svg.prop('font-size', '13')
-                    ),
-                    svg.cdata("to 0.1% of the Split's income")
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '72'),
-                        svg.prop('y', '255'),
-                        svg.prop('font-size', '18')
-                    ),
-                    svg.cdata('10 TOKENS = 1%')
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '67'),
-                        svg.prop('y', '170'),
-                        svg.prop('font-size', '12')
-                    ),
-                    svg.cdata('CHAIN')
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '60'),
-                        svg.prop('y', '195'),
-                        svg.prop('font-size', '12')
-                    ),
-                    svg.cdata('MINTED')
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '140'),
-                        svg.prop('y', '170'),
-                        svg.prop('font-size', '18'),
-                        svg.prop('fill', '#387D47')
-                    ),
-                    svg.cdata(chainId)
-                ),
-                svg.text(
-                    string.concat(
-                        svg.prop('x', '140'),
-                        svg.prop('y', '195'),
-                        svg.prop('font-size', '18'),
-                        svg.prop('fill', '#387D47')
-                    ),
-                    svg.cdata(mintedOnDate)
-                ),
+                '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" style="background:#000000;font-family:sans-serif;fill:#fafafa;font-size:40">',
+                header,
+                logo,
+                footer,
                 '</svg>'
             );
     }
 
-    function example() external pure returns (string memory) {
+    function example() external view returns (string memory) {
         return
             render(
+                address(this),
                 '0x2ed6c4B5dA6378c7897AC67Ba9e43102Feb694EE',
                 '1',
                 '2022-10-07'
