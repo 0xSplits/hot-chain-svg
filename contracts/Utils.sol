@@ -151,6 +151,8 @@ library utils {
         _hsla = string.concat('hsla(', utils.uint2str(hue), ', 92%, 52%, 1)');
     }
 
+    // TODO: use constants for startx/starty
+
     // draw splits logo or draw cool splat
     function drawOrb(
         uint256 x,
@@ -160,15 +162,41 @@ library utils {
     ) internal pure returns (string memory _values) {
         uint256 startingX = 365;
         uint256 startingY = 430;
-        _values = string.concat(
-            svg.circle(
-                string.concat(
-                    svg.prop('cx', uint2str(startingX - (x * 17))),
-                    svg.prop('cy', uint2str(startingY - (y * 29))),
-                    svg.prop('r', uint2str(4 + size * 2)),
-                    svg.prop('fill', color)
-                )
-            )
-        );
+        string memory cx = uint2str(startingX - (x * 17));
+        string memory cy = uint2str(startingY - (y * 29));
+        string memory r = uint2str(4 + size * 2);
+
+        _values =
+            svg.g(
+                  string.concat(
+                                svg.prop('transform',
+                                         string.concat(
+                                                       "translate(",
+                                                       cx,
+                                                       " ",
+                                                       cy,
+                                                       ")"
+)
+                                         )
+),
+                  string.concat(
+                  svg.animateTransform(
+                                       string.concat(
+                                                     svg.prop('attributeName', 'transform'),
+                                                     svg.prop('dur', '4'),
+                                                     svg.prop('repeatCount', 'indefinite'),
+                                                     svg.prop('additive','sum'),
+                                                     svg.prop('type', 'scale'),
+                                                     svg.prop('values','1; 1.25; 1; 0.75; 1')
+                                                     )
+                                       ),
+                  svg.circle(
+                             string.concat(
+                                           svg.prop('r', r),
+                                           svg.prop('fill', color)
+                                           )
+                             )
+                                )
+                  );
     }
 }
