@@ -151,30 +151,25 @@ library utils {
         _hsla = string.concat('hsla(', utils.uint2str(hue), ', 92%, 52%, 1)');
     }
 
-    // TODO: use constants for startx/starty
+    // TODO: add comment for dur?
 
     // draw splits logo or draw cool splat
     function drawOrb(
-        uint256 x,
-        uint256 y,
-        uint256 size,
+        uint256 cx,
+        uint256 cy,
+        uint256 r,
+        uint256 dur,
         string memory color
     ) internal pure returns (string memory _values) {
-        uint256 startingX = 365;
-        uint256 startingY = 430;
-        string memory cx = uint2str(startingX - (x * 17));
-        string memory cy = uint2str(startingY - (y * 29));
-        string memory r = uint2str(4 + size * 2);
-
         _values =
             svg.g(
                   string.concat(
                                 svg.prop('transform',
                                          string.concat(
                                                        "translate(",
-                                                       cx,
+                                                       uint2str(cx),
                                                        " ",
-                                                       cy,
+                                                       uint2str(cy),
                                                        ")"
 )
                                          )
@@ -183,20 +178,25 @@ library utils {
                   svg.animateTransform(
                                        string.concat(
                                                      svg.prop('attributeName', 'transform'),
-                                                     svg.prop('dur', '4'),
+                                                     svg.prop('dur', string.concat(uint2str(dur / 10), '.', uint2str(dur % 10))),
                                                      svg.prop('repeatCount', 'indefinite'),
                                                      svg.prop('additive','sum'),
                                                      svg.prop('type', 'scale'),
-                                                     svg.prop('values','1; 1.25; 1; 0.75; 1')
+                                                     svg.prop('values','1; 1.2; 1; 0.8; 1')
                                                      )
                                        ),
                   svg.circle(
                              string.concat(
-                                           svg.prop('r', r),
+                                           svg.prop('r', uint2str(r)),
                                            svg.prop('fill', color)
                                            )
                              )
                                 )
                   );
+    }
+
+    function bound(uint256 value, uint256 max, uint256 min) internal pure returns (uint256 _value) {
+        /* require(max >= min, "INVALID_BOUND"); */
+        _value = value % (max - min) + min;
     }
 }
