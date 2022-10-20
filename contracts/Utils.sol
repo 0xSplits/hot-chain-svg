@@ -168,15 +168,6 @@ library utils {
                     svg.prop('r', uint2str(4 + size * 2)),
                     svg.prop('fill', color)
                 )
-            ),
-            svg.circle(
-                string.concat(
-                    svg.prop('cx', uint2str(startingX - 2 - (x * 17))),
-                    svg.prop('cy', uint2str(startingY - 2 - (y * 29))),
-                    svg.prop('r', uint2str(4 + size * 2)),
-                    svg.prop('fill', '#FFFFFF'),
-                    svg.prop('opacity', '0.05')
-                )
             )
         );
     }

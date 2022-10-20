@@ -51,15 +51,15 @@ contract Renderer {
         );
         string memory header = string.concat(
             svg.text(
-                string.concat(svg.prop('x', '48'), svg.prop('y', '80')),
+                string.concat(svg.prop('x', '48'), svg.prop('y', '70')),
                 svg.cdata('Liquid Split')
             ),
             svg.text(
-                string.concat(svg.prop('x', '48'), svg.prop('y', '130')),
+                string.concat(svg.prop('x', '48'), svg.prop('y', '115')),
                 string.concat(svg.cdata('Chain '), svg.cdata(chainId))
             ),
             svg.text(
-                string.concat(svg.prop('x', '48'), svg.prop('y', '180')),
+                string.concat(svg.prop('x', '48'), svg.prop('y', '160')),
                 string.concat(svg.cdata('Minted '), svg.cdata(mintedOnDate))
             )
         );
@@ -77,7 +77,7 @@ contract Renderer {
                 string.concat(
                     svg.prop('x', '48'),
                     svg.prop('y', '550'),
-                    svg.prop('fill', '#666666'),
+                    svg.prop('fill', '#888888'),
                     svg.prop('font-size', '21')
                 ),
                 svg.cdata('Each token entitles the owner to 0.1% of the Split')
@@ -85,10 +85,8 @@ contract Renderer {
         );
         return
             string.concat(
-                '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" style="background:#000000;font-family:sans-serif;fill:#fafafa;font-size:40">',
-                header,
+                '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" style="background:#000000;font-family:sans-serif;fill:#fafafa;font-size:32">',
                 logo,
-                footer,
                 '</svg>'
             );
     }
