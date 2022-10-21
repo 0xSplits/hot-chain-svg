@@ -6,12 +6,44 @@ import './Utils.sol';
 
 contract Renderer {
     uint256 internal constant size = 600;
-    uint256 internal constant rowSpacing = size / 9;
+    uint256 internal constant rowSpacing = size / 8;
     uint256 internal constant colSpacing = size / 14;
     uint256 internal constant maxR = colSpacing * 65 / 100;
     uint256 internal constant minR = colSpacing * 3 / 10;
     uint256 internal constant maxDur = 60;
     uint256 internal constant minDur = 30;
+
+    function render(
+        address addr
+    ) public pure returns (string memory) {
+        string memory logo;
+        uint256 seed = uint256(uint160(addr));
+        string memory color = utils.getHslColor(seed);
+        uint8[5] memory xs = [5, 4, 3, 4, 5];
+        uint256 y = rowSpacing * 2;
+        for (uint256 i; i < 5; i++) {
+            uint256 x = colSpacing * xs[i];
+            for (uint256 j; j < (8 - xs[i]); j++) {
+                logo = string.concat(
+                    logo,
+                    drawRandomOrb(x, y, color, seed = newSeed(seed))
+                );
+                x += colSpacing * 2;
+            }
+            y += rowSpacing;
+        }
+
+        return
+            string.concat(
+                '<svg xmlns="http://www.w3.org/2000/svg" width="',
+                utils.uint2str(size),
+                '" height="',
+                utils.uint2str(size),
+                '"style="background:#000000;font-family:sans-serif;fill:#fafafa;font-size:32">',
+                logo,
+                '</svg>'
+            );
+    }
 
     function randomR(uint256 seed) internal pure returns (uint256 r) {
         r = utils.bound(seed, maxR, minR);
@@ -32,75 +64,15 @@ contract Renderer {
         }
     }
 
-    function render(
-        address addr
-    ) public pure returns (string memory) {
-        uint256 seed = uint256(uint160(addr));
-        string memory color = utils.getHslColor(seed);
-        seed = newSeed(seed);
-
-        uint256 rowHeight = rowSpacing * 5 / 2;
-        string memory drawLogoRow5 = string.concat(
-            utils.drawOrb(5 * colSpacing, rowHeight, randomR(newSeed(seed, 0)), randomDur(newSeed(seed, 1)), color),
-            utils.drawOrb(7 * colSpacing, rowHeight, randomR(newSeed(seed, 2)), randomDur(newSeed(seed, 3)), color),
-            utils.drawOrb(9 * colSpacing, rowHeight, randomR(newSeed(seed, 4)), randomDur(newSeed(seed, 5)), color)
-        );
-        seed = newSeed(seed, 6);
-
-        rowHeight += rowSpacing;
-        string memory drawLogoRow4 = string.concat(
-            utils.drawOrb(4 * colSpacing, rowHeight, randomR(newSeed(seed, 0)), randomDur(newSeed(seed, 1)), color),
-            utils.drawOrb(6 * colSpacing, rowHeight, randomR(newSeed(seed, 2)), randomDur(newSeed(seed, 3)), color),
-            utils.drawOrb(8 * colSpacing, rowHeight, randomR(newSeed(seed, 4)), randomDur(newSeed(seed, 5)), color),
-            utils.drawOrb(10 * colSpacing, rowHeight, randomR(newSeed(seed, 6)), randomDur(newSeed(seed, 7)), color)
-        );
-        seed = newSeed(seed, 8);
-
-        rowHeight += rowSpacing;
-        string memory drawLogoRow3 = string.concat(
-            utils.drawOrb(3 * colSpacing, rowHeight, randomR(newSeed(seed, 0)), randomDur(newSeed(seed, 1)), color),
-            utils.drawOrb(5 * colSpacing, rowHeight, randomR(newSeed(seed, 2)), randomDur(newSeed(seed, 3)), color),
-            utils.drawOrb(7 * colSpacing, rowHeight, randomR(newSeed(seed, 4)), randomDur(newSeed(seed, 5)), color),
-            utils.drawOrb(9 * colSpacing, rowHeight, randomR(newSeed(seed, 6)), randomDur(newSeed(seed, 7)), color),
-            utils.drawOrb(11 * colSpacing, rowHeight, randomR(newSeed(seed, 8)), randomDur(newSeed(seed, 9)), color)
-        );
-        seed = newSeed(seed, 10);
-
-        rowHeight += rowSpacing;
-        string memory drawLogoRow2 = string.concat(
-            utils.drawOrb(4 * colSpacing, rowHeight, randomR(newSeed(seed, 0)), randomDur(newSeed(seed, 1)), color),
-            utils.drawOrb(6 * colSpacing, rowHeight, randomR(newSeed(seed, 2)), randomDur(newSeed(seed, 3)), color),
-            utils.drawOrb(8 * colSpacing, rowHeight, randomR(newSeed(seed, 4)), randomDur(newSeed(seed, 5)), color),
-            utils.drawOrb(10 * colSpacing, rowHeight, randomR(newSeed(seed, 6)), randomDur(newSeed(seed, 7)), color)
-        );
-        seed = newSeed(seed, 8);
-
-        rowHeight += rowSpacing;
-        string memory drawLogoRow1 = string.concat(
-            utils.drawOrb(5 * colSpacing, rowHeight, randomR(newSeed(seed, 0)), randomDur(newSeed(seed, 1)), color),
-            utils.drawOrb(7 * colSpacing, rowHeight, randomR(newSeed(seed, 2)), randomDur(newSeed(seed, 3)), color),
-            utils.drawOrb(9 * colSpacing, rowHeight, randomR(newSeed(seed, 4)), randomDur(newSeed(seed, 5)), color)
-        );
-        seed = newSeed(seed, 6);
-
-        string memory logo = string.concat(
-            drawLogoRow5,
-            drawLogoRow4,
-            drawLogoRow3,
-            drawLogoRow2,
-            drawLogoRow1
-        );
-
-        return
-            string.concat(
-                '<svg xmlns="http://www.w3.org/2000/svg" width="',
-                utils.uint2str(size),
-                '" height="',
-                utils.uint2str(size),
-                '"style="background:#000000;font-family:sans-serif;fill:#fafafa;font-size:32">',
-                logo,
-                '</svg>'
-            );
+    function drawRandomOrb(
+                     uint256 cx,
+                     uint256 cy,
+                     string memory color,
+                     uint256 seed
+                     ) internal pure returns (string memory) {
+        uint256 r = randomR(seed);
+        uint256 dur = randomDur(seed);
+        return utils.drawOrb(cx, cy, r, dur, color);
     }
 
     function example() external view returns (string memory) {

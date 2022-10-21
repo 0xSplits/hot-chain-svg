@@ -141,17 +141,15 @@ library utils {
         return string(result);
     }
 
-    // returns hsla color from an address
+    // generate hsla color from seed
     function getHslColor(uint256 seed)
         internal
         pure
         returns (string memory _hsla)
     {
         uint256 hue = seed % 360;
-        _hsla = string.concat('hsla(', utils.uint2str(hue), ', 92%, 52%, 1)');
+        _hsla = string.concat('hsla(', utils.uint2str(hue), ', 88%, 56%, 1)');
     }
-
-    // TODO: add comment for dur?
 
     // draw splits logo or draw cool splat
     function drawOrb(
