@@ -7,13 +7,18 @@ on:
   schedule:
     - cron: '*/5 * * * *'
 
+permissions:
+  contents: read
+
 jobs:
   build:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
       - name: Sync nfts
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3
         with:
           node-version: 16.x
           cache: 'yarn'
@@ -21,6 +26,6 @@ jobs:
       - run: yarn sync-nfts
         env:
           PROVIDER_URL: ${{ secrets.PROVIDER_URL }}
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4
         with:
           commit_message: Sync nfts
